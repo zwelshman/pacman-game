@@ -1,6 +1,6 @@
 """
-BINARY EATER // CYBER EDITION
-A Cyberpunk Pac-Man style game hosted on Streamlit
+BINARY EATER // CHRISTMAS CYBER EDITION
+A Christmas-themed Cyberpunk Pac-Man style game hosted on Streamlit
 """
 
 import streamlit as st
@@ -8,8 +8,8 @@ from pathlib import Path
 
 # Page configuration
 st.set_page_config(
-    page_title="Binary Eater // Cyber Edition",
-    page_icon="🎮",
+    page_title="🎄 Binary Eater // Christmas Edition",
+    page_icon="🎅",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -22,9 +22,9 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Dark theme for the whole page */
+    /* Dark Christmas theme */
     .stApp {
-        background: linear-gradient(135deg, #0a0a0f 0%, #0d1117 50%, #0a0a0f 100%);
+        background: linear-gradient(180deg, #0a1628 0%, #1a0a28 50%, #0d1a0d 100%);
     }
     
     /* Center the game iframe */
@@ -37,36 +37,30 @@ st.markdown("""
     
     /* Style the iframe */
     iframe {
-        border: 3px solid #00ffff;
+        border: 4px solid;
+        border-image: linear-gradient(45deg, #ff0040, #00ff40, #ffd700, #ff0040) 1;
         border-radius: 12px;
-        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3),
-                    0 0 60px rgba(255, 0, 255, 0.2);
+        box-shadow: 0 0 40px rgba(255, 0, 64, 0.3), 0 0 80px rgba(0, 255, 64, 0.2);
     }
     
-    /* Title styling */
-    .cyber-title {
-        font-family: 'Courier New', monospace;
-        text-align: center;
-        color: #00ffff;
-        text-shadow: 0 0 10px #00ffff;
-        margin-bottom: 20px;
-    }
-    
-    /* Instructions panel */
+    /* Instructions panel - Christmas themed */
     .instructions {
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid #ff00ff;
+        background: linear-gradient(180deg, rgba(13, 26, 13, 0.9) 0%, rgba(26, 10, 10, 0.9) 100%);
+        border: 2px solid;
+        border-image: linear-gradient(45deg, #ff0040, #00ff40, #ffd700) 1;
         border-radius: 8px;
-        padding: 20px;
+        padding: 24px;
         margin: 20px auto;
-        max-width: 600px;
-        color: #00ff00;
+        max-width: 650px;
+        color: #00ff40;
         font-family: monospace;
     }
     
     .instructions h3 {
-        color: #ff00ff;
-        text-shadow: 0 0 5px #ff00ff;
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        font-family: 'Georgia', serif;
+        margin-bottom: 12px;
     }
     
     .instructions ul {
@@ -75,25 +69,30 @@ st.markdown("""
     }
     
     .instructions li {
-        padding: 5px 0;
+        padding: 6px 0;
+        color: #ffffff;
     }
     
     .instructions li::before {
-        content: "► ";
-        color: #00ffff;
+        content: "🎁 ";
     }
     
     /* Key styling */
     .key {
         display: inline-block;
-        background: #1a1a2e;
-        border: 1px solid #00ffff;
+        background: linear-gradient(180deg, #1a0a0a, #0d1a0d);
+        border: 1px solid #ff0040;
         border-radius: 4px;
         padding: 2px 8px;
         margin: 0 2px;
         font-family: monospace;
-        color: #00ffff;
+        color: #ff0040;
     }
+    
+    /* Score colors */
+    .score-red { color: #ff0040; }
+    .score-green { color: #00ff40; }
+    .score-gold { color: #ffd700; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -119,34 +118,34 @@ def main():
         
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Instructions section
+        # Instructions section - Christmas themed
         st.markdown("""
         <div class="instructions">
-            <h3>// SYSTEM CONTROLS</h3>
+            <h3>🎄 SANTA'S CONTROLS 🎄</h3>
             <ul>
-                <li><span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> or <span class="key">↑</span> <span class="key">←</span> <span class="key">↓</span> <span class="key">→</span> — Navigate the maze</li>
-                <li>Consume all binary data (0s and 1s) to clear the level</li>
-                <li>Avoid rogue AI entities (ghosts) or they'll terminate your process</li>
-                <li>Grab power pellets (magenta orbs) to temporarily scare ghosts</li>
-                <li>Eat scared ghosts for bonus points (combo multiplier active!)</li>
+                <li><span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> or <span class="key">↑</span> <span class="key">←</span> <span class="key">↓</span> <span class="key">→</span> — Guide Santa through the maze</li>
+                <li>Collect all binary presents (0s and 1s) to save Christmas!</li>
+                <li>Avoid the Grinch bots — they want to steal Christmas!</li>
+                <li>Grab the Christmas Stars ⭐ to gain Christmas Spirit power</li>
+                <li>With Christmas Spirit, you can defeat the Grinch bots!</li>
             </ul>
-            <h3>// SCORING MATRIX</h3>
+            <h3>🎁 PRESENT VALUES 🎁</h3>
             <ul>
-                <li>Binary pellet: <span style="color: #00ff00">+10 pts</span></li>
-                <li>Power pellet: <span style="color: #ff00ff">+50 pts</span></li>
-                <li>Ghost (1st): <span style="color: #ffcc00">+200 pts</span></li>
-                <li>Ghost (2nd): <span style="color: #ffcc00">+400 pts</span></li>
-                <li>Ghost (3rd): <span style="color: #ffcc00">+800 pts</span></li>
-                <li>Ghost (4th): <span style="color: #ffcc00">+1600 pts</span></li>
+                <li>Binary present: <span class="score-green">+10 pts</span></li>
+                <li>Christmas Star: <span class="score-gold">+50 pts</span></li>
+                <li>Grinch (1st): <span class="score-red">+200 pts</span></li>
+                <li>Grinch (2nd): <span class="score-red">+400 pts</span></li>
+                <li>Grinch (3rd): <span class="score-red">+800 pts</span></li>
+                <li>Grinch (4th): <span class="score-gold">+1600 pts</span></li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
         
         # Footer
         st.markdown("""
-        <div style="text-align: center; color: #444; font-family: monospace; margin-top: 30px; font-size: 12px;">
-            BINARY EATER v2.0 // CYBER EDITION<br>
-            Press any movement key or click INITIALIZE to start
+        <div style="text-align: center; color: #ffd700; font-family: 'Georgia', serif; margin-top: 30px; font-size: 14px;">
+            🎄 BINARY EATER // CHRISTMAS CYBER EDITION 🎄<br>
+            <span style="color: #888; font-size: 12px;">Press any movement key or click START CHRISTMAS to play!</span>
         </div>
         """, unsafe_allow_html=True)
 
