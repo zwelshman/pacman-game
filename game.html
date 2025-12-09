@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BINARY EATER // CYBER EDITION</title>
+    <title>BINARY EATER // CHRISTMAS EDITION</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: linear-gradient(135deg, #0a0a0f 0%, #0d1117 50%, #0a0a0f 100%);
+            background: linear-gradient(180deg, #0a1628 0%, #1a0a28 50%, #0d1a0d 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -28,461 +24,133 @@
             position: relative;
         }
         
-        /* Animated background grid */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
+        .snowflakes { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 1000; overflow: hidden; }
+        .snowflake { position: absolute; color: #fff; font-size: 1rem; text-shadow: 0 0 5px #fff; animation: snowfall linear infinite; opacity: 0.8; }
+        @keyframes snowfall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
         
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-        
-        /* Scanline effect */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.1) 0px,
-                rgba(0, 0, 0, 0.1) 1px,
-                transparent 1px,
-                transparent 3px
-            );
-            pointer-events: none;
-            z-index: 1000;
-        }
+        .christmas-lights { position: fixed; top: 0; left: 0; right: 0; height: 30px; display: flex; justify-content: center; gap: 20px; z-index: 100; }
+        .light-bulb { width: 12px; height: 18px; border-radius: 50%; margin-top: 8px; animation: twinkle 1s ease-in-out infinite; }
+        .light-bulb.red { background: #ff0040; box-shadow: 0 0 15px #ff0040, 0 0 30px #ff0040; }
+        .light-bulb.green { background: #00ff40; box-shadow: 0 0 15px #00ff40, 0 0 30px #00ff40; animation-delay: 0.2s; }
+        .light-bulb.gold { background: #ffd700; box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700; animation-delay: 0.4s; }
+        .light-bulb.blue { background: #00bfff; box-shadow: 0 0 15px #00bfff, 0 0 30px #00bfff; animation-delay: 0.6s; }
+        @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        .game-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
+        .game-wrapper { position: relative; z-index: 1; }
         .game-container {
-            background: linear-gradient(180deg, #000000 0%, #050510 100%);
-            border: 3px solid transparent;
-            background-clip: padding-box;
+            background: linear-gradient(180deg, #0d1a0d 0%, #1a0a0a 100%);
+            border: 4px solid; border-image: linear-gradient(45deg, #ff0040, #00ff40, #ffd700, #ff0040) 1;
+            border-radius: 12px; padding: 24px;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 0 40px rgba(255, 0, 64, 0.3), 0 0 80px rgba(0, 255, 64, 0.2);
             position: relative;
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-        
-        .game-container::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff00, #ff00ff, #00ffff);
-            background-size: 400% 400%;
-            border-radius: 14px;
-            z-index: -1;
-            animation: borderGlow 8s ease infinite;
-        }
-        
-        @keyframes borderGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+        .game-container::before, .game-container::after { content: '🎄'; position: absolute; font-size: 2rem; filter: drop-shadow(0 0 10px #00ff40); }
+        .game-container::before { top: -15px; left: -15px; }
+        .game-container::after { top: -15px; right: -15px; }
 
-        .title-bar {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 16px;
-            position: relative;
-        }
-        
+        .title-bar { width: 100%; text-align: center; margin-bottom: 16px; }
         .title-bar h1 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+            font-family: 'Mountains of Christmas', cursive; font-size: 1.8rem; font-weight: 700; letter-spacing: 3px;
+            background: linear-gradient(90deg, #ff0040, #ffd700, #00ff40, #ffd700, #ff0040);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: shimmer 3s linear infinite;
         }
-        
-        .subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: #00ff00;
-            letter-spacing: 6px;
-            margin-top: 4px;
-            opacity: 0.8;
-        }
+        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        .subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: #ff0040; letter-spacing: 6px; margin-top: 4px; }
+        .subtitle::before { content: '❄ '; } .subtitle::after { content: ' ❄'; }
 
-        .header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 8px;
-        }
+        .header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px 16px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.4); border-radius: 8px; }
+        .stat-box { display: flex; flex-direction: column; align-items: center; }
+        .stat-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: rgba(255,215,0,0.7); letter-spacing: 2px; margin-bottom: 2px; }
+        .stat-value { font-size: 1.3rem; font-weight: 700; }
+        .score-value { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.8); }
+        .level-value { color: #00ff40; text-shadow: 0 0 10px rgba(0,255,64,0.8); }
+        .lives-container { display: flex; gap: 6px; }
+        .life-icon { font-size: 1.2rem; filter: drop-shadow(0 0 5px #ffd700); transition: all 0.3s ease; }
+        .life-icon.lost { opacity: 0.2; transform: scale(0.7); filter: grayscale(1); }
 
-        .stat-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .stat-label {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 2px;
-            margin-bottom: 2px;
-        }
-        
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        
-        .score-value {
-            color: #00ff00;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-        }
-        
-        .level-value {
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
-        }
-        
-        .lives-container {
-            display: flex;
-            gap: 6px;
-        }
-        
-        .life-icon {
-            width: 20px;
-            height: 20px;
-            background: #ffcc00;
-            border-radius: 50%;
-            clip-path: polygon(100% 50%, 50% 50%, 50% 0%, 100% 0%, 100% 50%, 50% 50%, 50% 100%, 100% 100%);
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
-            transition: all 0.3s ease;
-        }
-        
-        .life-icon.lost {
-            opacity: 0.2;
-            transform: scale(0.8);
-        }
+        #gameCanvas { background-color: #050a05; display: block; border-radius: 4px; box-shadow: 0 0 30px rgba(255,0,64,0.3), 0 0 60px rgba(0,255,64,0.2), inset 0 0 60px rgba(0,0,0,0.8); }
+        .controls-hint { margin-top: 16px; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; }
+        .controls-hint span { color: #ff0040; }
 
-        #gameCanvas {
-            background-color: #000000;
-            display: block;
-            border-radius: 4px;
-            box-shadow: 
-                0 0 30px rgba(255, 0, 255, 0.3),
-                inset 0 0 60px rgba(0, 0, 0, 0.5);
-        }
+        .message-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,15,10,0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; z-index: 500; visibility: hidden; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(8px); }
+        .message-overlay.visible { visibility: visible; opacity: 1; }
+        .message-content { padding: 48px 64px; border: 3px solid; border-image: linear-gradient(45deg, #ff0040, #00ff40, #ffd700) 1; background: linear-gradient(180deg, rgba(10,20,10,0.98) 0%, rgba(20,10,10,0.98) 100%); max-width: 520px; position: relative; }
+        .message-content::before { content: '🎅'; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 3rem; filter: drop-shadow(0 0 20px #ff0040); }
+        .message-content h1 { font-family: 'Mountains of Christmas', cursive; font-size: 2.2rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 2px; line-height: 1.3; }
+        .message-content h1.win { background: linear-gradient(90deg, #00ff40, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .message-content h1.lose { background: linear-gradient(90deg, #ff0040, #ff6600); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .message-content h1.start { background: linear-gradient(90deg, #ff0040, #ffd700, #00ff40); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .message-content p { font-family: 'Share Tech Mono', monospace; color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.8; margin-bottom: 8px; }
+        .final-score { font-family: 'Mountains of Christmas', cursive; font-size: 3rem; font-weight: 700; color: #ffd700; margin: 20px 0; text-shadow: 0 0 20px rgba(255,215,0,0.8); }
+        .message-content button { background: linear-gradient(90deg, #ff0040, #00ff40); color: #000; border: none; padding: 14px 36px; margin-top: 24px; font-family: 'Mountains of Christmas', cursive; font-size: 1.1rem; font-weight: 700; letter-spacing: 2px; cursor: pointer; border-radius: 25px; transition: all 0.3s ease; }
+        .message-content button:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,0,64,0.6), 0 0 60px rgba(0,255,64,0.4); }
+        .high-score { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: #ffd700; margin-top: 12px; }
+        .high-score::before { content: '🎁 '; } .high-score::after { content: ' 🎁'; }
+        .power-indicator { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: #00ff40; opacity: 0; transition: opacity 0.3s ease; }
+        .power-indicator.active { opacity: 1; animation: powerPulse 0.5s ease infinite; }
+        .power-indicator::before { content: '🎄 '; } .power-indicator::after { content: ' 🎄'; }
+        @keyframes powerPulse { 0%, 100% { text-shadow: 0 0 10px #00ff40; } 50% { text-shadow: 0 0 20px #00ff40, 0 0 30px #00ff40; } }
         
-        .controls-hint {
-            margin-top: 16px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 2px;
-        }
-        
-        .controls-hint span {
-            color: #ff00ff;
-        }
-
-        .message-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 500;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            backdrop-filter: blur(8px);
-        }
-        
-        .message-overlay.visible {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .message-content {
-            padding: 48px 64px;
-            border: 2px solid;
-            border-image: linear-gradient(45deg, #00ffff, #ff00ff) 1;
-            background: linear-gradient(180deg, rgba(10, 10, 15, 0.98) 0%, rgba(5, 5, 16, 0.98) 100%);
-            max-width: 500px;
-            position: relative;
-        }
-        
-        .message-content::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ffff, transparent);
-        }
-
-        .message-content h1 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            line-height: 1.3;
-        }
-        
-        .message-content h1.win {
-            background: linear-gradient(90deg, #00ff00, #00ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .message-content h1.lose {
-            background: linear-gradient(90deg, #ff0066, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .message-content h1.start {
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .message-content p {
-            font-family: 'Share Tech Mono', monospace;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin-bottom: 8px;
-        }
-        
-        .final-score {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #00ff00;
-            margin: 20px 0;
-            text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
-        }
-
-        .message-content button {
-            background: linear-gradient(90deg, #ff00ff, #00ffff);
-            color: #000000;
-            border: none;
-            padding: 14px 36px;
-            margin-top: 24px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .message-content button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .message-content button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
-        }
-        
-        .message-content button:hover::before {
-            left: 100%;
-        }
-        
-        /* High score display */
-        .high-score {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.75rem;
-            color: #ffcc00;
-            margin-top: 12px;
-        }
-        
-        /* Mobile touch controls */
-        .touch-controls {
-            display: none;
-            margin-top: 20px;
-            gap: 8px;
-        }
-        
-        .touch-btn {
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 0, 255, 0.2);
-            border: 2px solid #ff00ff;
-            border-radius: 8px;
-            color: #ff00ff;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .touch-btn:active {
-            background: rgba(255, 0, 255, 0.5);
-            transform: scale(0.95);
-        }
-        
-        .touch-row {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-        
-        @media (max-width: 600px) {
-            .game-container {
-                padding: 16px;
-            }
-            
-            .title-bar h1 {
-                font-size: 1rem;
-            }
-            
-            .touch-controls {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-        
-        /* Power-up indicator */
-        .power-indicator {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: #ff00ff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .power-indicator.active {
-            opacity: 1;
-            animation: powerPulse 0.5s ease infinite;
-        }
-        
-        @keyframes powerPulse {
-            0%, 100% { text-shadow: 0 0 10px #ff00ff; }
-            50% { text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
-        }
+        .touch-controls { display: none; margin-top: 20px; gap: 8px; }
+        .touch-btn { width: 56px; height: 56px; background: rgba(255,0,64,0.2); border: 2px solid #ff0040; border-radius: 8px; color: #ff0040; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+        .touch-btn:active { background: rgba(255,0,64,0.5); transform: scale(0.95); }
+        .touch-row { display: flex; gap: 8px; justify-content: center; }
+        @media (max-width: 600px) { .game-container { padding: 16px; } .title-bar h1 { font-size: 1.3rem; } .touch-controls { display: flex; flex-direction: column; } .christmas-lights { display: none; } }
     </style>
 </head>
 <body>
-
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="christmas-lights" id="christmasLights"></div>
     <div class="game-wrapper">
         <div class="game-container">
-            <div class="title-bar">
-                <h1>BINARY EATER</h1>
-                <div class="subtitle">// CYBER EDITION v2.0</div>
-            </div>
-            
+            <div class="title-bar"><h1>🎄 BINARY EATER 🎄</h1><div class="subtitle">CHRISTMAS CYBER EDITION</div></div>
             <div class="header">
-                <div class="stat-box">
-                    <span class="stat-label">SCORE</span>
-                    <span class="stat-value score-value" id="scoreValue">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">LEVEL</span>
-                    <span class="stat-value level-value" id="levelValue">1</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">LIVES</span>
-                    <div class="lives-container" id="livesContainer">
-                        <div class="life-icon"></div>
-                        <div class="life-icon"></div>
-                        <div class="life-icon"></div>
-                    </div>
-                </div>
+                <div class="stat-box"><span class="stat-label">PRESENTS</span><span class="stat-value score-value" id="scoreValue">0</span></div>
+                <div class="stat-box"><span class="stat-label">LEVEL</span><span class="stat-value level-value" id="levelValue">1</span></div>
+                <div class="stat-box"><span class="stat-label">LIVES</span><div class="lives-container" id="livesContainer"><span class="life-icon">🎅</span><span class="life-icon">🎅</span><span class="life-icon">🎅</span></div></div>
             </div>
-            
             <canvas id="gameCanvas" width="480" height="480"></canvas>
-            
-            <div class="power-indicator" id="powerIndicator">◆ FEAR MODE ACTIVE ◆</div>
-            
-            <div class="controls-hint">
-                <span>[W A S D]</span> or <span>[ARROWS]</span> to navigate
-            </div>
+            <div class="power-indicator" id="powerIndicator">CHRISTMAS SPIRIT ACTIVE</div>
+            <div class="controls-hint"><span>[W A S D]</span> or <span>[ARROWS]</span> to spread holiday cheer</div>
         </div>
-        
-        <!-- Mobile touch controls -->
-        <div class="touch-controls">
-            <div class="touch-row">
-                <div class="touch-btn" data-dir="up">▲</div>
-            </div>
-            <div class="touch-row">
-                <div class="touch-btn" data-dir="left">◄</div>
-                <div class="touch-btn" data-dir="down">▼</div>
-                <div class="touch-btn" data-dir="right">►</div>
-            </div>
-        </div>
+        <div class="touch-controls"><div class="touch-row"><div class="touch-btn" data-dir="up">▲</div></div><div class="touch-row"><div class="touch-btn" data-dir="left">◄</div><div class="touch-btn" data-dir="down">▼</div><div class="touch-btn" data-dir="right">►</div></div></div>
     </div>
-
     <div id="messageOverlay" class="message-overlay visible">
         <div class="message-content">
-            <h1 id="overlayTitle" class="start">BINARY EATER</h1>
-            <p id="overlayMessage">Navigate the digital maze and consume all binary data.<br/>Avoid rogue AI entities — or eat them when powered up!</p>
+            <h1 id="overlayTitle" class="start">Merry Hackmas!</h1>
+            <p id="overlayMessage">Help Santa collect all the binary presents!<br/>Avoid the Grinch bots — unless you have Christmas Spirit! 🎁</p>
             <div class="high-score" id="highScoreDisplay">HIGH SCORE: 0</div>
-            <button id="startButton">INITIALIZE</button>
+            <button id="startButton">🎄 START CHRISTMAS 🎄</button>
         </div>
     </div>
-
     <script>
+        // Create snowflakes
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const snowflakeChars = ['❄', '❅', '❆', '✦', '✧', '⋆'];
+        for (let i = 0; i < 50; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            snowflake.style.animationDelay = Math.random() * 10 + 's';
+            snowflake.style.fontSize = (Math.random() * 0.8 + 0.5) + 'rem';
+            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            snowflakesContainer.appendChild(snowflake);
+        }
+        
+        // Create christmas lights
+        const lightsContainer = document.getElementById('christmasLights');
+        const lightColors = ['red', 'green', 'gold', 'blue'];
+        for (let i = 0; i < 30; i++) {
+            const light = document.createElement('div');
+            light.className = 'light-bulb ' + lightColors[i % 4];
+            light.style.animationDelay = (i * 0.1) + 's';
+            lightsContainer.appendChild(light);
+        }
+
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreValue = document.getElementById('scoreValue');
@@ -495,838 +163,275 @@
         const powerIndicator = document.getElementById('powerIndicator');
         const highScoreDisplay = document.getElementById('highScoreDisplay');
 
-        // --- GAME CONSTANTS ---
-        const TILE_SIZE = 30;
-        const GRID_SIZE = 16;
-        const WALL_COLOR = '#0a1520';
-        const WALL_GLOW = '#00ffff';
-        const PATH_COLOR = '#000000';
-        const PACMAN_COLOR = '#ffcc00';
-        const GHOST_COLORS = ['#ff00ff', '#00ffff', '#00ff00', '#ff6600'];
-        const BINARY_COLOR = '#00ff00';
-        const FEAR_COLOR = '#4444ff';
+        const TILE_SIZE = 30, GRID_SIZE = 16, PATH_COLOR = '#050a05', WALL_COLOR = '#0d1a0d';
+        const PACMAN_COLOR = '#ff0040', GHOST_COLORS = ['#00ff40', '#00bfff', '#ffd700', '#ff69b4'];
+        const PELLET_COLOR_1 = '#ff0040', PELLET_COLOR_2 = '#00ff40';
 
-        let gameLoopInterval;
-        let animationFrame;
-        let gameState = 'ready';
-        let score = 0;
-        let highScore = parseInt(localStorage.getItem('binaryEaterHighScore')) || 0;
-        let lives = 3;
-        let level = 1;
-        let pelletsRemaining = 0;
-        let isFrightened = false;
-        let frightenTimer = 0;
-        let frightenDuration = 600;
-        let binaryCode = [];
-        let gameSpeed = 100;
-        let lastTime = 0;
-        let ghostEatenCombo = 0;
-
-        // --- TONE.JS SOUND SETUP ---
+        let animationFrame, gameState = 'ready', score = 0, lives = 3, level = 1, pelletsRemaining = 0;
+        let highScore = parseInt(localStorage.getItem('christmasBinaryEaterHighScore')) || 0;
+        let isFrightened = false, frightenTimer = 0, frightenDuration = 600, binaryCode = [];
+        let gameSpeed = 100, lastTime = 0, ghostEatenCombo = 0, snowParticles = [];
         let audioStarted = false;
-        
-        const pelletSynth = new Tone.Synth({
-            oscillator: { type: "square" },
-            envelope: { attack: 0.005, decay: 0.08, sustain: 0.01, release: 0.08 }
-        }).toDestination();
-        pelletSynth.volume.value = -12;
 
-        const powerSynth = new Tone.FMSynth({
-            harmonicity: 2,
-            modulationIndex: 8,
-            envelope: { attack: 0.01, decay: 0.3, sustain: 0.1, release: 0.5 }
-        }).toDestination();
+        // Sounds
+        const pelletSynth = new Tone.Synth({ oscillator: { type: "triangle" }, envelope: { attack: 0.005, decay: 0.1, sustain: 0.02, release: 0.1 } }).toDestination();
+        pelletSynth.volume.value = -10;
+        const powerSynth = new Tone.PolySynth(Tone.Synth).toDestination();
         powerSynth.volume.value = -8;
+        const ghostEatSynth = new Tone.Synth({ oscillator: { type: "sine" }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.3 } }).toDestination();
+        ghostEatSynth.volume.value = -8;
+        const deathSynth = new Tone.NoiseSynth({ noise: { type: "white" }, envelope: { attack: 0.01, decay: 0.3, sustain: 0, release: 0.4 } }).toDestination();
+        deathSynth.volume.value = -10;
 
-        const ghostEatSynth = new Tone.Synth({
-            oscillator: { type: "sawtooth" },
-            envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.3 }
-        }).toDestination();
-        ghostEatSynth.volume.value = -10;
+        // Jingle Bells
+        const jingleSynth = new Tone.FMSynth({ harmonicity: 3.0, modulationIndex: 10, oscillator: { type: 'sine' }, envelope: { attack: 0.05, decay: 0.4, sustain: 0.1, release: 0.8 } }).toDestination();
+        jingleSynth.volume.value = -16;
+        const bassSynth = new Tone.MonoSynth({ oscillator: { type: "triangle" }, envelope: { attack: 0.1, decay: 0.8, sustain: 0.4, release: 1.2 }, filterEnvelope: { attack: 0.001, decay: 0.5, sustain: 0.4, release: 1.5, baseFrequency: 150, octaves: 3 } }).toDestination();
+        bassSynth.volume.value = -18;
 
-        const deathSynth = new Tone.NoiseSynth({
-            noise: { type: "pink" },
-            envelope: { attack: 0.01, decay: 0.4, sustain: 0, release: 0.5 }
-        }).toDestination();
-        deathSynth.volume.value = -8;
-
-        const winSynth = new Tone.PolySynth(Tone.Synth).toDestination();
-        winSynth.volume.value = -8;
-
-        // Background music
-        const bgSynth = new Tone.FMSynth({
-            harmonicity: 3.0,
-            modulationIndex: 10,
-            oscillator: { type: 'sine' },
-            envelope: { attack: 0.05, decay: 0.5, sustain: 0.01, release: 1 }
-        }).toDestination();
-        bgSynth.volume.value = -18;
-
-        const bassSynth = new Tone.MonoSynth({
-            oscillator: { type: "square" },
-            envelope: { attack: 0.1, decay: 0.9, sustain: 0.5, release: 1.5 },
-            filterEnvelope: { attack: 0.001, decay: 0.5, sustain: 0.5, release: 2, baseFrequency: 200, octaves: 4 }
-        }).toDestination();
-        bassSynth.volume.value = -20;
-
-        const melodyNotes = [
-            { time: '0:0:0', note: 'E4', duration: '4n' },
-            { time: '0:1:0', note: 'E4', duration: '4n' },
-            { time: '0:2:0', note: 'E4', duration: '2n' },
-            { time: '1:0:0', note: 'E4', duration: '4n' },
-            { time: '1:1:0', note: 'E4', duration: '4n' },
-            { time: '1:2:0', note: 'E4', duration: '2n' },
-            { time: '2:0:0', note: 'E4', duration: '4n' },
-            { time: '2:1:0', note: 'G4', duration: '4n' },
-            { time: '2:2:0', note: 'C4', duration: '8n' },
-            { time: '2:2:5', note: 'D4', duration: '8n' },
-            { time: '2:3:0', note: 'E4', duration: '2n' },
+        const jingleNotes = [
+            { time: '0:0:0', note: 'E5', duration: '8n' }, { time: '0:0:2', note: 'E5', duration: '8n' }, { time: '0:1:0', note: 'E5', duration: '4n' },
+            { time: '0:2:0', note: 'E5', duration: '8n' }, { time: '0:2:2', note: 'E5', duration: '8n' }, { time: '0:3:0', note: 'E5', duration: '4n' },
+            { time: '1:0:0', note: 'E5', duration: '8n' }, { time: '1:0:2', note: 'G5', duration: '8n' }, { time: '1:1:0', note: 'C5', duration: '8n.' },
+            { time: '1:1:3', note: 'D5', duration: '8n' }, { time: '1:2:0', note: 'E5', duration: '2n' },
+            { time: '2:0:0', note: 'F5', duration: '8n' }, { time: '2:0:2', note: 'F5', duration: '8n' }, { time: '2:1:0', note: 'F5', duration: '8n.' },
+            { time: '2:1:3', note: 'F5', duration: '8n' }, { time: '2:2:0', note: 'F5', duration: '8n' }, { time: '2:2:2', note: 'E5', duration: '8n' },
+            { time: '2:3:0', note: 'E5', duration: '8n' }, { time: '2:3:2', note: 'E5', duration: '16n' },
+            { time: '3:0:0', note: 'E5', duration: '8n' }, { time: '3:0:2', note: 'D5', duration: '8n' }, { time: '3:1:0', note: 'D5', duration: '8n' },
+            { time: '3:1:2', note: 'E5', duration: '8n' }, { time: '3:2:0', note: 'D5', duration: '4n' }, { time: '3:3:0', note: 'G5', duration: '4n' }
         ];
-
-        const harmonyNotes = [
-            { time: '0m', note: 'C3', duration: '1m' },
-            { time: '1m', note: 'F3', duration: '1m' },
-            { time: '2m', note: 'G3', duration: '1m' },
-            { time: '3m', note: 'C3', duration: '1m' },
+        const bassNotes = [
+            { time: '0:0:0', note: 'C3', duration: '2n' }, { time: '0:2:0', note: 'C3', duration: '2n' }, { time: '1:0:0', note: 'C3', duration: '1m' },
+            { time: '2:0:0', note: 'F3', duration: '2n' }, { time: '2:2:0', note: 'C3', duration: '2n' }, { time: '3:0:0', note: 'G3', duration: '2n' }, { time: '3:2:0', note: 'G3', duration: '2n' }
         ];
+        const jinglePart = new Tone.Part((time, value) => { jingleSynth.triggerAttackRelease(value.note, value.duration, time); }, jingleNotes).start(0);
+        const bassPart = new Tone.Part((time, value) => { bassSynth.triggerAttackRelease(value.note, value.duration, time); }, bassNotes).start(0);
+        jinglePart.loop = true; jinglePart.loopEnd = '4m'; bassPart.loop = true; bassPart.loopEnd = '4m'; Tone.Transport.bpm.value = 140;
 
-        const melodyPart = new Tone.Part((time, value) => {
-            bgSynth.triggerAttackRelease(value.note, value.duration, time);
-        }, melodyNotes).start(0);
-
-        const harmonyPart = new Tone.Part((time, value) => {
-            bassSynth.triggerAttackRelease(value.note, value.duration, time);
-        }, harmonyNotes).start(0);
-
-        melodyPart.loop = true;
-        melodyPart.loopEnd = '4m';
-        harmonyPart.loop = true;
-        harmonyPart.loopEnd = '4m';
-        Tone.Transport.bpm.value = 120;
-
-        // --- MAP DEFINITION ---
         const initialMaze = [
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,2,1,1,1,1,1,0,0,1,1,1,1,1,2,0],
-            [0,1,0,0,0,1,1,0,0,1,1,0,0,0,1,0],
-            [0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,0],
-            [0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0],
-            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-            [0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0],
-            [0,1,1,1,0,1,1,3,3,1,1,0,1,1,1,0],
-            [0,1,0,0,0,1,1,3,3,1,1,0,0,0,1,0],
-            [0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0],
-            [0,1,0,0,0,1,1,1,1,1,1,0,0,0,1,0],
-            [0,1,0,1,1,1,1,0,0,1,1,1,1,0,1,0],
-            [0,1,0,1,0,0,1,0,0,1,0,0,1,0,1,0],
-            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-            [0,2,1,1,1,1,1,1,1,1,1,1,1,1,2,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,2,1,1,1,1,1,0,0,1,1,1,1,1,2,0], [0,1,0,0,0,1,1,0,0,1,1,0,0,0,1,0],
+            [0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,0], [0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0], [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0], [0,1,1,1,0,1,1,3,3,1,1,0,1,1,1,0], [0,1,0,0,0,1,1,3,3,1,1,0,0,0,1,0],
+            [0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0], [0,1,0,0,0,1,1,1,1,1,1,0,0,0,1,0], [0,1,0,1,1,1,1,0,0,1,1,1,1,0,1,0],
+            [0,1,0,1,0,0,1,0,0,1,0,0,1,0,1,0], [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0], [0,2,1,1,1,1,1,1,1,1,1,1,1,1,2,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         ];
         let maze = initialMaze.map(row => [...row]);
-
-        // --- GAME OBJECTS ---
-        let pacman = {
-            x: 7, y: 13,
-            dx: 0, dy: 0,
-            nextDx: 0, nextDy: 0,
-            size: TILE_SIZE * 0.8,
-            mouthAngle: 0,
-            dir: 0,
-            moving: false
-        };
-
+        let pacman = { x: 7, y: 13, dx: 0, dy: 0, nextDx: 0, nextDy: 0, size: TILE_SIZE * 0.85, mouthAngle: 0, dir: 0, moving: false };
         let ghosts = [];
 
         function initGhosts() {
             ghosts = [
-                { x: 7, y: 7, color: GHOST_COLORS[0], dx: 0, dy: -1, isDead: false, homeX: 7, homeY: 7, scatter: false },
-                { x: 8, y: 7, color: GHOST_COLORS[1], dx: 0, dy: -1, isDead: false, homeX: 8, homeY: 7, scatter: false },
-                { x: 7, y: 8, color: GHOST_COLORS[2], dx: 0, dy: 1, isDead: false, homeX: 7, homeY: 8, scatter: false },
-                { x: 8, y: 8, color: GHOST_COLORS[3], dx: 0, dy: 1, isDead: false, homeX: 8, homeY: 8, scatter: false }
+                { x: 7, y: 7, color: GHOST_COLORS[0], dx: 0, dy: -1, isDead: false, homeX: 7, homeY: 7 },
+                { x: 8, y: 7, color: GHOST_COLORS[1], dx: 0, dy: -1, isDead: false, homeX: 8, homeY: 7 },
+                { x: 7, y: 8, color: GHOST_COLORS[2], dx: 0, dy: 1, isDead: false, homeX: 7, homeY: 8 },
+                { x: 8, y: 8, color: GHOST_COLORS[3], dx: 0, dy: 1, isDead: false, homeX: 8, homeY: 8 }
             ];
         }
 
-        // --- INITIALIZATION ---
-        function generateBinaryCode() {
-            binaryCode = [];
-            pelletsRemaining = 0;
-            for (let y = 0; y < GRID_SIZE; y++) {
-                binaryCode[y] = [];
-                for (let x = 0; x < GRID_SIZE; x++) {
-                    if (maze[y][x] === 1 || maze[y][x] === 2) {
-                        pelletsRemaining++;
-                        binaryCode[y][x] = Math.random() < 0.5 ? '0' : '1';
-                    } else {
-                        binaryCode[y][x] = '';
-                    }
-                }
-            }
-        }
+        function initSnowParticles() { snowParticles = []; for (let i = 0; i < 30; i++) snowParticles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 1, speed: Math.random() * 0.5 + 0.3, wobble: Math.random() * Math.PI * 2 }); }
 
-        function resetGame() {
-            maze = initialMaze.map(row => [...row]);
-            generateBinaryCode();
-            score = 0;
-            lives = 3;
-            level = 1;
-            gameSpeed = 100;
-            isFrightened = false;
-            frightenTimer = 0;
-            ghostEatenCombo = 0;
+        function generateBinaryCode() { binaryCode = []; pelletsRemaining = 0; for (let y = 0; y < GRID_SIZE; y++) { binaryCode[y] = []; for (let x = 0; x < GRID_SIZE; x++) { if (maze[y][x] === 1 || maze[y][x] === 2) { pelletsRemaining++; binaryCode[y][x] = Math.random() < 0.5 ? '0' : '1'; } else { binaryCode[y][x] = ''; } } } }
 
-            pacman.x = 7; pacman.y = 13;
-            pacman.dx = 0; pacman.dy = 0;
-            pacman.nextDx = 0; pacman.nextDy = 0;
-            pacman.dir = 0;
-            pacman.moving = false;
+        function resetGame() { maze = initialMaze.map(row => [...row]); generateBinaryCode(); score = 0; lives = 3; level = 1; gameSpeed = 100; isFrightened = false; frightenTimer = 0; ghostEatenCombo = 0; pacman.x = 7; pacman.y = 13; pacman.dx = 0; pacman.dy = 0; pacman.nextDx = 0; pacman.nextDy = 0; pacman.dir = 0; pacman.moving = false; initGhosts(); initSnowParticles(); updateDisplay(); }
+        function resetRound() { pacman.x = 7; pacman.y = 13; pacman.dx = 0; pacman.dy = 0; pacman.nextDx = 0; pacman.nextDy = 0; pacman.dir = 0; pacman.moving = false; isFrightened = false; frightenTimer = 0; ghostEatenCombo = 0; initGhosts(); }
+        function nextLevel() { level++; gameSpeed = Math.max(60, 100 - (level - 1) * 5); maze = initialMaze.map(row => [...row]); generateBinaryCode(); resetRound(); if (audioStarted) { powerSynth.triggerAttackRelease(['C5', 'E5', 'G5'], '8n'); setTimeout(() => powerSynth.triggerAttackRelease(['D5', 'G5', 'B5'], '8n'), 200); setTimeout(() => powerSynth.triggerAttackRelease(['E5', 'G5', 'C6'], '4n'), 400); } }
+        function updateDisplay() { scoreValue.textContent = score.toString().padStart(6, '0'); levelValue.textContent = level; const lifeIcons = livesContainer.querySelectorAll('.life-icon'); lifeIcons.forEach((icon, i) => { icon.classList.toggle('lost', i >= lives); }); powerIndicator.classList.toggle('active', isFrightened); if (score > highScore) { highScore = score; localStorage.setItem('christmasBinaryEaterHighScore', highScore); } highScoreDisplay.textContent = 'HIGH SCORE: ' + highScore; }
 
-            initGhosts();
-            updateDisplay();
-        }
-
-        function resetRound() {
-            pacman.x = 7; pacman.y = 13;
-            pacman.dx = 0; pacman.dy = 0;
-            pacman.nextDx = 0; pacman.nextDy = 0;
-            pacman.dir = 0;
-            pacman.moving = false;
-            isFrightened = false;
-            frightenTimer = 0;
-            ghostEatenCombo = 0;
-
-            initGhosts();
-        }
-
-        function nextLevel() {
-            level++;
-            gameSpeed = Math.max(60, 100 - (level - 1) * 5);
-            maze = initialMaze.map(row => [...row]);
-            generateBinaryCode();
-            resetRound();
-            
-            // Play win sound
-            winSynth.triggerAttackRelease(['C5', 'E5', 'G5'], '8n');
-            setTimeout(() => winSynth.triggerAttackRelease(['D5', 'F5', 'A5'], '8n'), 150);
-            setTimeout(() => winSynth.triggerAttackRelease(['E5', 'G5', 'B5'], '8n'), 300);
-        }
-
-        function updateDisplay() {
-            scoreValue.textContent = score.toString().padStart(6, '0');
-            levelValue.textContent = level;
-            
-            const lifeIcons = livesContainer.querySelectorAll('.life-icon');
-            lifeIcons.forEach((icon, i) => {
-                icon.classList.toggle('lost', i >= lives);
-            });
-            
-            powerIndicator.classList.toggle('active', isFrightened);
-            
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('binaryEaterHighScore', highScore);
-            }
-            highScoreDisplay.textContent = `HIGH SCORE: ${highScore}`;
-        }
-
-        // --- DRAWING FUNCTIONS ---
         function drawMaze() {
             const time = Date.now();
-            
             for (let y = 0; y < GRID_SIZE; y++) {
                 for (let x = 0; x < GRID_SIZE; x++) {
-                    const gx = x * TILE_SIZE;
-                    const gy = y * TILE_SIZE;
-
+                    const gx = x * TILE_SIZE, gy = y * TILE_SIZE;
                     if (maze[y][x] === 0) {
-                        // Wall with glow effect
-                        ctx.fillStyle = WALL_COLOR;
-                        ctx.fillRect(gx, gy, TILE_SIZE, TILE_SIZE);
-                        
-                        // Draw glowing edges where wall meets path
-                        ctx.strokeStyle = WALL_GLOW;
-                        ctx.lineWidth = 1;
-                        ctx.globalAlpha = 0.3 + Math.sin(time / 1000) * 0.1;
-                        
-                        // Check adjacent cells for paths
-                        if (y > 0 && maze[y-1][x] !== 0) {
-                            ctx.beginPath();
-                            ctx.moveTo(gx, gy);
-                            ctx.lineTo(gx + TILE_SIZE, gy);
-                            ctx.stroke();
-                        }
-                        if (y < GRID_SIZE-1 && maze[y+1][x] !== 0) {
-                            ctx.beginPath();
-                            ctx.moveTo(gx, gy + TILE_SIZE);
-                            ctx.lineTo(gx + TILE_SIZE, gy + TILE_SIZE);
-                            ctx.stroke();
-                        }
-                        if (x > 0 && maze[y][x-1] !== 0) {
-                            ctx.beginPath();
-                            ctx.moveTo(gx, gy);
-                            ctx.lineTo(gx, gy + TILE_SIZE);
-                            ctx.stroke();
-                        }
-                        if (x < GRID_SIZE-1 && maze[y][x+1] !== 0) {
-                            ctx.beginPath();
-                            ctx.moveTo(gx + TILE_SIZE, gy);
-                            ctx.lineTo(gx + TILE_SIZE, gy + TILE_SIZE);
-                            ctx.stroke();
-                        }
+                        ctx.fillStyle = WALL_COLOR; ctx.fillRect(gx, gy, TILE_SIZE, TILE_SIZE);
+                        const glowColor = ((x + y) % 2 === 0) ? '#ff0040' : '#00ff40';
+                        ctx.strokeStyle = glowColor; ctx.lineWidth = 1; ctx.globalAlpha = 0.4 + Math.sin(time / 800 + x + y) * 0.2;
+                        if (y > 0 && maze[y-1][x] !== 0) { ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + TILE_SIZE, gy); ctx.stroke(); }
+                        if (y < GRID_SIZE-1 && maze[y+1][x] !== 0) { ctx.beginPath(); ctx.moveTo(gx, gy + TILE_SIZE); ctx.lineTo(gx + TILE_SIZE, gy + TILE_SIZE); ctx.stroke(); }
+                        if (x > 0 && maze[y][x-1] !== 0) { ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + TILE_SIZE); ctx.stroke(); }
+                        if (x < GRID_SIZE-1 && maze[y][x+1] !== 0) { ctx.beginPath(); ctx.moveTo(gx + TILE_SIZE, gy); ctx.lineTo(gx + TILE_SIZE, gy + TILE_SIZE); ctx.stroke(); }
                         ctx.globalAlpha = 1;
-                    } else {
-                        ctx.fillStyle = PATH_COLOR;
-                        ctx.fillRect(gx, gy, TILE_SIZE, TILE_SIZE);
-                    }
+                    } else { ctx.fillStyle = PATH_COLOR; ctx.fillRect(gx, gy, TILE_SIZE, TILE_SIZE); }
                 }
             }
         }
+
+        function drawSnow() { const time = Date.now(); ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; snowParticles.forEach(p => { p.y += p.speed; p.x += Math.sin(time / 1000 + p.wobble) * 0.3; if (p.y > canvas.height) { p.y = -5; p.x = Math.random() * canvas.width; } if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); }); }
 
         function drawPellets() {
             const time = Date.now();
-            
             for (let y = 0; y < GRID_SIZE; y++) {
                 for (let x = 0; x < GRID_SIZE; x++) {
-                    const cx = x * TILE_SIZE + TILE_SIZE / 2;
-                    const cy = y * TILE_SIZE + TILE_SIZE / 2;
-
+                    const cx = x * TILE_SIZE + TILE_SIZE / 2, cy = y * TILE_SIZE + TILE_SIZE / 2;
                     if (maze[y][x] === 1) {
-                        // Binary pellet with glow
-                        const pulse = Math.sin(time / 500 + x + y) * 0.2 + 0.8;
-                        ctx.fillStyle = BINARY_COLOR;
-                        ctx.globalAlpha = pulse;
-                        ctx.font = `bold ${TILE_SIZE * 0.55}px 'Share Tech Mono'`;
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        
-                        if (binaryCode[y] && binaryCode[y][x]) {
-                            ctx.shadowBlur = 8;
-                            ctx.shadowColor = BINARY_COLOR;
-                            ctx.fillText(binaryCode[y][x], cx, cy + 1);
-                            ctx.shadowBlur = 0;
-                        }
+                        const color = ((x + y) % 2 === 0) ? PELLET_COLOR_1 : PELLET_COLOR_2;
+                        const pulse = Math.sin(time / 400 + x * 0.5 + y * 0.5) * 0.2 + 0.8;
+                        ctx.fillStyle = color; ctx.globalAlpha = pulse;
+                        ctx.font = "bold " + (TILE_SIZE * 0.5) + "px 'Share Tech Mono'"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                        if (binaryCode[y] && binaryCode[y][x]) { ctx.shadowBlur = 10; ctx.shadowColor = color; ctx.fillText(binaryCode[y][x], cx, cy + 1); ctx.shadowBlur = 0; }
                         ctx.globalAlpha = 1;
-
                     } else if (maze[y][x] === 2) {
-                        // Power pellet with strong pulse
-                        const pulse = Math.sin(time / 200) * 0.3 + 0.7;
-                        const size = TILE_SIZE * 0.35 * (0.9 + pulse * 0.2);
-                        
-                        ctx.fillStyle = '#ff00ff';
-                        ctx.shadowBlur = 20 * pulse;
-                        ctx.shadowColor = '#ff00ff';
+                        const pulse = Math.sin(time / 150) * 0.3 + 0.7, rotation = time / 500;
+                        ctx.save(); ctx.translate(cx, cy); ctx.rotate(rotation);
+                        ctx.fillStyle = '#ffd700'; ctx.shadowBlur = 20 * pulse; ctx.shadowColor = '#ffd700';
+                        const spikes = 5, outerRadius = TILE_SIZE * 0.35, innerRadius = TILE_SIZE * 0.15;
                         ctx.beginPath();
-                        ctx.arc(cx, cy, size, 0, Math.PI * 2);
-                        ctx.fill();
-                        
-                        // Inner glow
-                        ctx.fillStyle = '#ffffff';
-                        ctx.globalAlpha = 0.5;
-                        ctx.beginPath();
-                        ctx.arc(cx, cy, size * 0.4, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.globalAlpha = 1;
-                        ctx.shadowBlur = 0;
+                        for (let i = 0; i < spikes * 2; i++) { const radius = i % 2 === 0 ? outerRadius : innerRadius; const angle = (i * Math.PI) / spikes - Math.PI / 2; const sx = Math.cos(angle) * radius, sy = Math.sin(angle) * radius; if (i === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy); }
+                        ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0; ctx.restore();
                     }
                 }
             }
         }
 
         function drawPacman() {
-            const size = pacman.size / 2;
-            const x = (pacman.x + 0.5) * TILE_SIZE;
-            const y = (pacman.y + 0.5) * TILE_SIZE;
-
-            // Smooth mouth animation
-            pacman.mouthAngle = Math.abs(Math.sin(Date.now() / 100)) * 0.4;
-
-            const baseAngle = pacman.dir * Math.PI / 2;
-            const startAngle = baseAngle + pacman.mouthAngle;
-            const endAngle = baseAngle + 2 * Math.PI - pacman.mouthAngle;
-
-            // Glow effect
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = PACMAN_COLOR;
-            
-            ctx.fillStyle = PACMAN_COLOR;
-            ctx.beginPath();
-            ctx.arc(x, y, size, startAngle, endAngle);
-            ctx.lineTo(x, y);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Eye
-            const eyeAngle = baseAngle - Math.PI / 4;
-            const eyeX = x + Math.cos(eyeAngle) * size * 0.4;
-            const eyeY = y + Math.sin(eyeAngle) * size * 0.4;
-            ctx.fillStyle = '#000000';
-            ctx.beginPath();
-            ctx.arc(eyeX, eyeY, size * 0.12, 0, Math.PI * 2);
-            ctx.fill();
-            
+            const size = pacman.size / 2, x = (pacman.x + 0.5) * TILE_SIZE, y = (pacman.y + 0.5) * TILE_SIZE;
+            pacman.mouthAngle = Math.abs(Math.sin(Date.now() / 80)) * 0.45;
+            const baseAngle = pacman.dir * Math.PI / 2, startAngle = baseAngle + pacman.mouthAngle, endAngle = baseAngle + 2 * Math.PI - pacman.mouthAngle;
+            ctx.shadowBlur = 12; ctx.shadowColor = PACMAN_COLOR;
+            ctx.fillStyle = PACMAN_COLOR; ctx.beginPath(); ctx.arc(x, y, size, startAngle, endAngle); ctx.lineTo(x, y); ctx.closePath(); ctx.fill();
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, size * 0.85, startAngle + 0.3, endAngle - 0.3); ctx.stroke();
+            const hatAngle = baseAngle - Math.PI / 2, hatX = x + Math.cos(hatAngle) * size * 0.3, hatY = y + Math.sin(hatAngle) * size * 0.3;
+            ctx.fillStyle = PACMAN_COLOR; ctx.beginPath(); ctx.moveTo(hatX - 8, hatY); ctx.lineTo(hatX, hatY - 12); ctx.lineTo(hatX + 8, hatY); ctx.closePath(); ctx.fill();
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(hatX, hatY - 14, 4, 0, Math.PI * 2); ctx.fill();
+            const eyeAngle = baseAngle - Math.PI / 4, eyeX = x + Math.cos(eyeAngle) * size * 0.4, eyeY = y + Math.sin(eyeAngle) * size * 0.4;
+            ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(eyeX, eyeY, size * 0.15, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#000000'; ctx.beginPath(); ctx.arc(eyeX, eyeY, size * 0.08, 0, Math.PI * 2); ctx.fill();
             ctx.shadowBlur = 0;
         }
 
         function drawGhosts() {
             const time = Date.now();
-            
-            ghosts.forEach(ghost => {
-                const x = (ghost.x + 0.5) * TILE_SIZE;
-                const y = (ghost.y + 0.5) * TILE_SIZE;
-                const radius = TILE_SIZE * 0.4;
-
-                let color = ghost.color;
-                if (ghost.isDead) {
-                    color = 'rgba(255, 255, 255, 0.3)';
-                } else if (isFrightened) {
-                    // Blinking when frightened is about to end
-                    if (frightenTimer < 200 && Math.floor(time / 100) % 2 === 0) {
-                        color = '#ffffff';
-                    } else {
-                        color = FEAR_COLOR;
-                    }
-                }
-                
-                ctx.shadowBlur = ghost.isDead ? 0 : 12;
-                ctx.shadowColor = color;
-                ctx.fillStyle = color;
-                
-                // Ghost body
-                ctx.beginPath();
-                ctx.arc(x, y - radius/3, radius, Math.PI, 0);
-                
-                // Wavy bottom
-                const waveOffset = Math.sin(time / 150) * 2;
-                const segments = 4;
-                const segWidth = (radius * 2) / segments;
-                
+            ghosts.forEach((ghost, idx) => {
+                const x = (ghost.x + 0.5) * TILE_SIZE, y = (ghost.y + 0.5) * TILE_SIZE, radius = TILE_SIZE * 0.4;
+                let color = ghost.color, isScared = false;
+                if (ghost.isDead) { color = 'rgba(255, 255, 255, 0.3)'; }
+                else if (isFrightened) { isScared = true; color = (frightenTimer < 200 && Math.floor(time / 100) % 2 === 0) ? '#ffffff' : '#4444ff'; }
+                ctx.shadowBlur = ghost.isDead ? 0 : 12; ctx.shadowColor = color; ctx.fillStyle = color;
+                ctx.beginPath(); ctx.arc(x, y - radius/3, radius, Math.PI, 0);
+                const waveOffset = Math.sin(time / 120 + idx) * 3, segments = 4, segWidth = (radius * 2) / segments;
                 ctx.lineTo(x + radius, y + radius * 0.6);
-                for (let i = segments; i >= 0; i--) {
-                    const sx = x - radius + segWidth * i;
-                    const sy = y + radius * 0.6 + (i % 2 === 0 ? waveOffset : -waveOffset);
-                    ctx.lineTo(sx, sy);
+                for (let i = segments; i >= 0; i--) { const sx = x - radius + segWidth * i, sy = y + radius * 0.6 + (i % 2 === 0 ? waveOffset : -waveOffset); ctx.lineTo(sx, sy); }
+                ctx.closePath(); ctx.fill();
+                if (!isScared && !ghost.isDead) {
+                    ctx.fillStyle = idx === 0 ? '#ff0040' : (idx === 1 ? '#00bfff' : (idx === 2 ? '#ffd700' : '#ff69b4'));
+                    ctx.beginPath(); ctx.moveTo(x - radius * 0.8, y - radius * 0.8); ctx.lineTo(x, y - radius * 1.8); ctx.lineTo(x + radius * 0.8, y - radius * 0.8); ctx.closePath(); ctx.fill();
+                    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(x, y - radius * 1.9, 4, 0, Math.PI * 2); ctx.fill();
                 }
-                ctx.closePath();
-                ctx.fill();
-                
                 ctx.shadowBlur = 0;
-
-                // Eyes
-                if (!ghost.isDead || true) {
-                    const eyeColor = isFrightened && !ghost.isDead ? '#ffffff' : '#ffffff';
-                    const pupilColor = isFrightened && !ghost.isDead ? '#ff0000' : '#000000';
-                    
-                    ctx.fillStyle = eyeColor;
-                    const eyeOffset = radius * 0.35;
-                    const eyeSize = radius * 0.28;
-                    
-                    ctx.beginPath();
-                    ctx.arc(x - eyeOffset, y - radius * 0.3, eyeSize, 0, Math.PI * 2);
-                    ctx.arc(x + eyeOffset, y - radius * 0.3, eyeSize, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // Pupils that follow pacman
-                    ctx.fillStyle = pupilColor;
-                    const pupilSize = eyeSize * 0.5;
-                    const lookX = Math.sign(pacman.x - ghost.x) * 2;
-                    const lookY = Math.sign(pacman.y - ghost.y) * 2;
-                    
-                    ctx.beginPath();
-                    ctx.arc(x - eyeOffset + lookX, y - radius * 0.3 + lookY, pupilSize, 0, Math.PI * 2);
-                    ctx.arc(x + eyeOffset + lookX, y - radius * 0.3 + lookY, pupilSize, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+                const eyeColor = '#ffffff', pupilColor = isScared ? '#ff0000' : '#000000';
+                ctx.fillStyle = eyeColor; const eyeOffset = radius * 0.35, eyeSize = radius * 0.28;
+                ctx.beginPath(); ctx.arc(x - eyeOffset, y - radius * 0.3, eyeSize, 0, Math.PI * 2); ctx.arc(x + eyeOffset, y - radius * 0.3, eyeSize, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = pupilColor; const pupilSize = eyeSize * 0.5, lookX = Math.sign(pacman.x - ghost.x) * 2, lookY = Math.sign(pacman.y - ghost.y) * 2;
+                ctx.beginPath(); ctx.arc(x - eyeOffset + lookX, y - radius * 0.3 + lookY, pupilSize, 0, Math.PI * 2); ctx.arc(x + eyeOffset + lookX, y - radius * 0.3 + lookY, pupilSize, 0, Math.PI * 2); ctx.fill();
             });
         }
 
-        function drawParticles() {
-            // Ambient floating particles
-            const time = Date.now();
-            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
-            
-            for (let i = 0; i < 20; i++) {
-                const seed = i * 137.5;
-                const px = (Math.sin(time / 2000 + seed) * 0.5 + 0.5) * canvas.width;
-                const py = (Math.cos(time / 3000 + seed * 0.7) * 0.5 + 0.5) * canvas.height;
-                const size = Math.sin(time / 500 + seed) * 1 + 1.5;
-                
-                ctx.beginPath();
-                ctx.arc(px, py, size, 0, Math.PI * 2);
-                ctx.fill();
+        function drawChristmasLights() {
+            const time = Date.now(); ctx.globalAlpha = 0.6;
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    if (maze[y][x] === 0 && (x + y) % 5 === 0) {
+                        const twinkle = Math.sin(time / 300 + x * 2 + y * 3) * 0.5 + 0.5;
+                        if (twinkle > 0.7) {
+                            const colors = ['#ff0040', '#00ff40', '#ffd700', '#00bfff'], color = colors[(x + y) % 4];
+                            const cx = x * TILE_SIZE + TILE_SIZE / 2, cy = y * TILE_SIZE + TILE_SIZE / 2;
+                            ctx.fillStyle = color; ctx.shadowBlur = 8; ctx.shadowColor = color;
+                            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+                        }
+                    }
+                }
             }
+            ctx.globalAlpha = 1;
         }
 
-        function drawGame() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawMaze();
-            drawParticles();
-            drawPellets();
-            drawPacman();
-            drawGhosts();
-        }
+        function drawGame() { ctx.clearRect(0, 0, canvas.width, canvas.height); drawMaze(); drawChristmasLights(); drawSnow(); drawPellets(); drawPacman(); drawGhosts(); }
 
-        // --- GAME LOGIC ---
         function movePacman() {
-            // Try to change to buffered direction
             const nextTile = maze[pacman.y + pacman.nextDy]?.[pacman.x + pacman.nextDx];
-            if (nextTile !== undefined && nextTile !== 0) {
-                pacman.dx = pacman.nextDx;
-                pacman.dy = pacman.nextDy;
-                pacman.dir = getDirection(pacman.dx, pacman.dy);
-            }
-
-            // Move in current direction
-            const newX = pacman.x + pacman.dx;
-            const newY = pacman.y + pacman.dy;
-
-            if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE && maze[newY][newX] !== 0) {
-                pacman.x = newX;
-                pacman.y = newY;
-                pacman.moving = true;
-            } else {
-                pacman.moving = false;
-            }
-
-            // Consume pellets
+            if (nextTile !== undefined && nextTile !== 0) { pacman.dx = pacman.nextDx; pacman.dy = pacman.nextDy; pacman.dir = getDirection(pacman.dx, pacman.dy); }
+            const newX = pacman.x + pacman.dx, newY = pacman.y + pacman.dy;
+            if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE && maze[newY][newX] !== 0) { pacman.x = newX; pacman.y = newY; pacman.moving = true; } else { pacman.moving = false; }
             const tile = maze[pacman.y][pacman.x];
             if (tile === 1 || tile === 2) {
-                if (audioStarted) {
-                    const note = tile === 2 ? 'G5' : ['C5', 'D5', 'E5'][Math.floor(Math.random() * 3)];
-                    pelletSynth.triggerAttackRelease(note, '16n');
-                }
-
-                if (tile === 2) {
-                    frightenGhosts();
-                    score += 50;
-                    if (audioStarted) powerSynth.triggerAttackRelease('C4', '8n');
-                } else {
-                    score += 10;
-                }
-                
-                pelletsRemaining--;
-                maze[pacman.y][pacman.x] = 3;
-                updateDisplay();
+                if (audioStarted) { const notes = ['E5', 'G5', 'C6', 'E6']; pelletSynth.triggerAttackRelease(notes[Math.floor(Math.random() * notes.length)], '16n'); if (tile === 2) powerSynth.triggerAttackRelease(['C4', 'E4', 'G4', 'C5'], '4n'); }
+                if (tile === 2) { frightenGhosts(); score += 50; } else { score += 10; }
+                pelletsRemaining--; maze[pacman.y][pacman.x] = 3; updateDisplay();
             }
         }
 
-        function frightenGhosts() {
-            isFrightened = true;
-            frightenTimer = frightenDuration;
-            ghostEatenCombo = 0;
-            ghosts.forEach(g => {
-                if (!g.isDead) {
-                    // Reverse direction
-                    g.dx = -g.dx;
-                    g.dy = -g.dy;
-                }
-            });
-            updateDisplay();
-        }
+        function frightenGhosts() { isFrightened = true; frightenTimer = frightenDuration; ghostEatenCombo = 0; ghosts.forEach(g => { if (!g.isDead) { g.dx = -g.dx; g.dy = -g.dy; } }); updateDisplay(); }
 
         function moveGhosts() {
-            const speedMod = isFrightened ? 2 : 1;
-            
             ghosts.forEach((ghost, idx) => {
-                // Skip movement sometimes based on ghost index for variety
-                if (Date.now() % (speedMod * (idx + 2)) !== 0 && !ghost.isDead) return;
-                
+                if (Date.now() % ((isFrightened ? 2 : 1) * (idx + 2)) !== 0 && !ghost.isDead) return;
                 if (ghost.isDead) {
-                    // Return to home
-                    if (ghost.x === ghost.homeX && ghost.y === ghost.homeY) {
-                        ghost.isDead = false;
-                        return;
-                    }
-                    
-                    // Navigate home
+                    if (ghost.x === ghost.homeX && ghost.y === ghost.homeY) { ghost.isDead = false; return; }
                     const moves = getValidMoves(ghost.x, ghost.y);
-                    if (moves.length > 0) {
-                        let bestMove = moves[0];
-                        let bestDist = Infinity;
-                        
-                        moves.forEach(([dx, dy]) => {
-                            const dist = Math.abs(ghost.x + dx - ghost.homeX) + Math.abs(ghost.y + dy - ghost.homeY);
-                            if (dist < bestDist) {
-                                bestDist = dist;
-                                bestMove = [dx, dy];
-                            }
-                        });
-                        
-                        ghost.x += bestMove[0];
-                        ghost.y += bestMove[1];
-                    }
+                    if (moves.length > 0) { let bestMove = moves[0], bestDist = Infinity; moves.forEach(([dx, dy]) => { const dist = Math.abs(ghost.x + dx - ghost.homeX) + Math.abs(ghost.y + dy - ghost.homeY); if (dist < bestDist) { bestDist = dist; bestMove = [dx, dy]; } }); ghost.x += bestMove[0]; ghost.y += bestMove[1]; }
                     return;
                 }
-
-                const moves = getValidMoves(ghost.x, ghost.y);
-                if (moves.length === 0) return;
-
-                // Filter out reverse direction unless necessary
-                const reverseDx = -ghost.dx;
-                const reverseDy = -ghost.dy;
+                const moves = getValidMoves(ghost.x, ghost.y); if (moves.length === 0) return;
+                const reverseDx = -ghost.dx, reverseDy = -ghost.dy;
                 let preferredMoves = moves.filter(([dx, dy]) => dx !== reverseDx || dy !== reverseDy);
                 if (preferredMoves.length === 0) preferredMoves = moves;
-
                 let chosenMove;
-                
-                if (isFrightened) {
-                    // Run away from pacman
-                    let bestDist = -Infinity;
-                    preferredMoves.forEach(([dx, dy]) => {
-                        const dist = Math.abs(ghost.x + dx - pacman.x) + Math.abs(ghost.y + dy - pacman.y);
-                        if (dist > bestDist) {
-                            bestDist = dist;
-                            chosenMove = [dx, dy];
-                        }
-                    });
-                } else {
-                    // Chase or scatter based on mode
-                    const chaseChance = 0.7 + level * 0.05;
-                    
-                    if (Math.random() < chaseChance) {
-                        // Chase pacman
-                        let bestDist = Infinity;
-                        preferredMoves.forEach(([dx, dy]) => {
-                            const dist = Math.abs(ghost.x + dx - pacman.x) + Math.abs(ghost.y + dy - pacman.y);
-                            if (dist < bestDist) {
-                                bestDist = dist;
-                                chosenMove = [dx, dy];
-                            }
-                        });
-                    } else {
-                        // Random move
-                        chosenMove = preferredMoves[Math.floor(Math.random() * preferredMoves.length)];
-                    }
-                }
-
-                if (chosenMove) {
-                    ghost.dx = chosenMove[0];
-                    ghost.dy = chosenMove[1];
-                    ghost.x += ghost.dx;
-                    ghost.y += ghost.dy;
-                }
+                if (isFrightened) { let bestDist = -Infinity; preferredMoves.forEach(([dx, dy]) => { const dist = Math.abs(ghost.x + dx - pacman.x) + Math.abs(ghost.y + dy - pacman.y); if (dist > bestDist) { bestDist = dist; chosenMove = [dx, dy]; } }); }
+                else { const chaseChance = 0.7 + level * 0.05; if (Math.random() < chaseChance) { let bestDist = Infinity; preferredMoves.forEach(([dx, dy]) => { const dist = Math.abs(ghost.x + dx - pacman.x) + Math.abs(ghost.y + dy - pacman.y); if (dist < bestDist) { bestDist = dist; chosenMove = [dx, dy]; } }); } else { chosenMove = preferredMoves[Math.floor(Math.random() * preferredMoves.length)]; } }
+                if (chosenMove) { ghost.dx = chosenMove[0]; ghost.dy = chosenMove[1]; ghost.x += ghost.dx; ghost.y += ghost.dy; }
             });
         }
 
-        function getValidMoves(x, y) {
-            const moves = [];
-            const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
-
-            directions.forEach(([dx, dy]) => {
-                const nextX = x + dx;
-                const nextY = y + dy;
-                if (nextX >= 0 && nextX < GRID_SIZE && nextY >= 0 && nextY < GRID_SIZE && maze[nextY][nextX] !== 0) {
-                    moves.push([dx, dy]);
-                }
-            });
-            return moves;
-        }
-
-        function getDirection(dx, dy) {
-            if (dx === 1) return 0;
-            if (dy === -1) return 1;
-            if (dx === -1) return 2;
-            if (dy === 1) return 3;
-            return pacman.dir;
-        }
+        function getValidMoves(x, y) { const moves = [], directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]; directions.forEach(([dx, dy]) => { const nextX = x + dx, nextY = y + dy; if (nextX >= 0 && nextX < GRID_SIZE && nextY >= 0 && nextY < GRID_SIZE && maze[nextY][nextX] !== 0) moves.push([dx, dy]); }); return moves; }
+        function getDirection(dx, dy) { if (dx === 1) return 0; if (dy === -1) return 1; if (dx === -1) return 2; if (dy === 1) return 3; return pacman.dir; }
 
         function checkCollisions() {
             ghosts.forEach(ghost => {
                 if (ghost.x === pacman.x && ghost.y === pacman.y) {
-                    if (isFrightened && !ghost.isDead) {
-                        // Eat ghost
-                        ghost.isDead = true;
-                        ghostEatenCombo++;
-                        const bonus = 200 * Math.pow(2, ghostEatenCombo - 1);
-                        score += bonus;
-                        updateDisplay();
-                        
-                        if (audioStarted) {
-                            const notes = ['E5', 'G5', 'B5', 'D6'];
-                            ghostEatSynth.triggerAttackRelease(notes[Math.min(ghostEatenCombo - 1, 3)], '8n');
-                        }
-                    } else if (!ghost.isDead) {
-                        // Die
-                        loseLife();
-                    }
+                    if (isFrightened && !ghost.isDead) { ghost.isDead = true; ghostEatenCombo++; const bonus = 200 * Math.pow(2, ghostEatenCombo - 1); score += bonus; updateDisplay(); if (audioStarted) { const notes = ['C5', 'E5', 'G5', 'C6']; ghostEatSynth.triggerAttackRelease(notes[Math.min(ghostEatenCombo - 1, 3)], '8n'); } }
+                    else if (!ghost.isDead) { loseLife(); }
                 }
             });
         }
 
-        function loseLife() {
-            lives--;
-            updateDisplay();
-            
-            if (audioStarted) {
-                deathSynth.triggerAttackRelease('8n');
-            }
-
-            if (lives <= 0) {
-                gameOver();
-            } else {
-                // Brief pause then reset round
-                gameState = 'paused';
-                setTimeout(() => {
-                    resetRound();
-                    gameState = 'playing';
-                }, 1000);
-            }
-        }
-
-        function checkWinCondition() {
-            if (pelletsRemaining === 0) {
-                gameState = 'levelComplete';
-                setTimeout(() => {
-                    nextLevel();
-                    updateDisplay();
-                    gameState = 'playing';
-                }, 1500);
-            }
-        }
+        function loseLife() { lives--; updateDisplay(); if (audioStarted) deathSynth.triggerAttackRelease('8n'); if (lives <= 0) { gameOver(); } else { gameState = 'paused'; setTimeout(() => { resetRound(); gameState = 'playing'; }, 1000); } }
+        function checkWinCondition() { if (pelletsRemaining === 0) { gameState = 'levelComplete'; setTimeout(() => { nextLevel(); updateDisplay(); gameState = 'playing'; }, 1500); } }
 
         function gameOver() {
-            gameState = 'gameover';
-            Tone.Transport.stop();
-            
-            overlayTitle.textContent = 'SYSTEM CRASH';
-            overlayTitle.className = 'lose';
-            overlayMessage.innerHTML = `Your data stream has been terminated.<br/>Final transmission complete.`;
+            gameState = 'gameover'; Tone.Transport.stop();
+            overlayTitle.textContent = '❄️ Bah Humbug! ❄️'; overlayTitle.className = 'lose';
+            overlayMessage.innerHTML = 'The Grinch bots got Santa!<br/>Christmas is in peril...';
             document.querySelector('.final-score')?.remove();
-            const scoreEl = document.createElement('div');
-            scoreEl.className = 'final-score';
-            scoreEl.textContent = score;
-            overlayMessage.after(scoreEl);
-            startButton.textContent = 'REBOOT SYSTEM';
-            
+            const scoreEl = document.createElement('div'); scoreEl.className = 'final-score'; scoreEl.textContent = score; overlayMessage.after(scoreEl);
+            startButton.textContent = '🎄 TRY AGAIN 🎄';
             messageOverlay.classList.add('visible');
         }
 
-        function showWinScreen() {
-            gameState = 'won';
-            Tone.Transport.stop();
-            
-            overlayTitle.textContent = 'NETWORK CLEARED';
-            overlayTitle.className = 'win';
-            overlayMessage.innerHTML = `All binary data consumed.<br/>System access granted.`;
-            document.querySelector('.final-score')?.remove();
-            const scoreEl = document.createElement('div');
-            scoreEl.className = 'final-score';
-            scoreEl.textContent = score;
-            overlayMessage.after(scoreEl);
-            startButton.textContent = 'NEXT LEVEL';
-            
-            messageOverlay.classList.add('visible');
-        }
-
-        // --- GAME LOOP ---
         function gameLoop(timestamp) {
-            if (gameState !== 'playing') {
-                animationFrame = requestAnimationFrame(gameLoop);
-                drawGame();
-                return;
-            }
-            
-            // Fixed timestep for game logic
-            if (timestamp - lastTime >= gameSpeed) {
-                lastTime = timestamp;
-                
-                if (isFrightened) {
-                    frightenTimer--;
-                    if (frightenTimer <= 0) {
-                        isFrightened = false;
-                        ghostEatenCombo = 0;
-                        updateDisplay();
-                    }
-                }
-
-                movePacman();
-                moveGhosts();
-                checkCollisions();
-                checkWinCondition();
-            }
-            
-            drawGame();
-            animationFrame = requestAnimationFrame(gameLoop);
+            if (gameState !== 'playing') { animationFrame = requestAnimationFrame(gameLoop); drawGame(); return; }
+            if (timestamp - lastTime >= gameSpeed) { lastTime = timestamp; if (isFrightened) { frightenTimer--; if (frightenTimer <= 0) { isFrightened = false; ghostEatenCombo = 0; updateDisplay(); } } movePacman(); moveGhosts(); checkCollisions(); checkWinCondition(); }
+            drawGame(); animationFrame = requestAnimationFrame(gameLoop);
         }
 
-        // --- EVENT LISTENERS ---
         function handleKey(event) {
-            if (gameState === 'ready' || gameState === 'gameover' || gameState === 'won') {
-                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', ' ', 'Enter'].includes(event.key)) {
-                    startButton.click();
-                    return;
-                }
-            }
-
+            if (gameState === 'ready' || gameState === 'gameover' || gameState === 'won') { if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', ' ', 'Enter'].includes(event.key)) { startButton.click(); return; } }
             let dx = 0, dy = 0;
-            
-            switch (event.key) {
-                case 'ArrowUp':
-                case 'w':
-                case 'W':
-                    dy = -1; break;
-                case 'ArrowDown':
-                case 's':
-                case 'S':
-                    dy = 1; break;
-                case 'ArrowLeft':
-                case 'a':
-                case 'A':
-                    dx = -1; break;
-                case 'ArrowRight':
-                case 'd':
-                case 'D':
-                    dx = 1; break;
-            }
-
-            if (dx !== 0 || dy !== 0) {
-                pacman.nextDx = dx;
-                pacman.nextDy = dy;
-                event.preventDefault();
-            }
+            switch (event.key) { case 'ArrowUp': case 'w': case 'W': dy = -1; break; case 'ArrowDown': case 's': case 'S': dy = 1; break; case 'ArrowLeft': case 'a': case 'A': dx = -1; break; case 'ArrowRight': case 'd': case 'D': dx = 1; break; }
+            if (dx !== 0 || dy !== 0) { pacman.nextDx = dx; pacman.nextDy = dy; event.preventDefault(); }
         }
 
-        // Touch controls
-        document.querySelectorAll('.touch-btn').forEach(btn => {
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const dir = btn.dataset.dir;
-                switch (dir) {
-                    case 'up': pacman.nextDx = 0; pacman.nextDy = -1; break;
-                    case 'down': pacman.nextDx = 0; pacman.nextDy = 1; break;
-                    case 'left': pacman.nextDx = -1; pacman.nextDy = 0; break;
-                    case 'right': pacman.nextDx = 1; pacman.nextDy = 0; break;
-                }
-            });
-        });
+        document.querySelectorAll('.touch-btn').forEach(btn => { btn.addEventListener('touchstart', (e) => { e.preventDefault(); const dir = btn.dataset.dir; switch (dir) { case 'up': pacman.nextDx = 0; pacman.nextDy = -1; break; case 'down': pacman.nextDx = 0; pacman.nextDy = 1; break; case 'left': pacman.nextDx = -1; pacman.nextDy = 0; break; case 'right': pacman.nextDx = 1; pacman.nextDy = 0; break; } }); });
 
         startButton.addEventListener('click', async () => {
-            if (!audioStarted) {
-                await Tone.start();
-                audioStarted = true;
-            }
-
+            if (!audioStarted) { await Tone.start(); audioStarted = true; }
             messageOverlay.classList.remove('visible');
-            
-            if (gameState === 'gameover' || gameState === 'ready') {
-                resetGame();
-            }
-            
-            Tone.Transport.start();
-            gameState = 'playing';
-            lastTime = performance.now();
-            
-            if (!animationFrame) {
-                animationFrame = requestAnimationFrame(gameLoop);
-            }
+            if (gameState === 'gameover' || gameState === 'ready') { resetGame(); }
+            Tone.Transport.start(); gameState = 'playing'; lastTime = performance.now();
+            if (!animationFrame) { animationFrame = requestAnimationFrame(gameLoop); }
         });
 
         window.addEventListener('keydown', handleKey);
-
-        // --- INITIALIZATION ---
-        highScoreDisplay.textContent = `HIGH SCORE: ${highScore}`;
-        resetGame();
-        drawGame();
-        gameState = 'ready';
+        highScoreDisplay.textContent = 'HIGH SCORE: ' + highScore;
+        resetGame(); drawGame(); gameState = 'ready';
     </script>
 </body>
 </html>
